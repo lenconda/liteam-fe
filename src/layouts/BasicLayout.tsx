@@ -14,6 +14,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
+import { router } from 'umi';
 import logo from '../assets/logo.svg';
 
 export interface BasicLayoutProps extends ProLayoutProps {
@@ -39,6 +40,10 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
   });
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
+  if (props.location?.pathname === '/') {
+    router.push('/messages');
+  }
+
   const { dispatch, children, settings } = props;
   /**
    * constructor
