@@ -69,14 +69,26 @@ export default {
         {
           name: '注册',
           path: '/user/register',
-          component: './user/register'
-        }
+          component: './user/register',
+        },
       ],
     },
     {
       path: '/',
       component: '../layouts/BasicLayout',
       routes: [
+        {
+          path: '/messages',
+          component: './messages',
+          name: '消息',
+          icon: 'message',
+        },
+        {
+          path: '/contacts',
+          component: './contacts',
+          name: '通讯录',
+          icon: 'contacts',
+        },
         {
           component: './404',
         },
