@@ -8,16 +8,20 @@ export interface MessageListItemComponentProps {
   name: string;
   currentMessage?: string;
   unread: number;
+  onClick?: () => any;
+  selected: boolean;
 }
 
 const MessageListItem: React.FC<MessageListItemComponentProps> = props => (
   <Badge count={props.unread}>
-    <List.Item.Meta
-      style={styles['cursor-pointer']}
-      avatar={<Avatar src={props.avatar} />}
-      title={props.name}
-      description={<Ellipsis length={25}>{props.currentMessage}</Ellipsis>}
-    />
+    <List.Item onClick={props.onClick}>
+      <List.Item.Meta
+        style={styles['cursor-pointer']}
+        avatar={<Avatar src={props.avatar} />}
+        title={props.name}
+        description={<Ellipsis length={25}>{props.currentMessage}</Ellipsis>}
+      />
+    </List.Item>
   </Badge>
 );
 
