@@ -1,14 +1,14 @@
 @import '~antd/es/style/themes/default.less';
 
 .item {
-  width: 100%;
-  transition: all .4s;
   box-sizing: border-box;
-  padding: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
   min-width: 0;
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: all .4s;
 
   &.selected {
     background-color: #f0fdff;
@@ -16,8 +16,8 @@
   }
 
   &:hover {
-    cursor: pointer;
     background-color: #f0fdff;
+    cursor: pointer;
     transition: all .4s;
   }
 }
