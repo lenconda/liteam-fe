@@ -21,11 +21,10 @@ const Model: ILoginModelType = {
 
   effects: {
     *login({ payload }, { call }) {
-      window.localStorage.setItem('persist', payload.remember ? '1' : '0');
-
       const response = yield call(login, payload);
       // Login successfully
-      if (response.data.message === 'OK') {
+      // console.log(response.data.msg);
+      if (response.data.msg === '登录成功') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -40,8 +39,8 @@ const Model: ILoginModelType = {
             window.location.href = redirect;
             return;
           }
+          router.push(redirect || '/');
         }
-        yield router.push(redirect || '/meetings');
       }
     },
 

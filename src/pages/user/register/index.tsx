@@ -21,11 +21,11 @@ const RegisterForm: React.FC<RegisterComponentProps> = props => {
     e.preventDefault();
 
     props.form.validateFields((err: any, values: any) => {
-      const { account, name, password } = values;
+      const { username, password } = values;
       props.dispatch({
         type: 'register/register',
         payload: {
-          account, name, password,
+          username, password,
         },
       });
     });
@@ -46,22 +46,12 @@ const RegisterForm: React.FC<RegisterComponentProps> = props => {
         <Card className={style.card}>
           <Form onSubmit={handleSubmit}>
             <Form.Item>
-              {getFieldDecorator('account', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: '请输入账户名称' }],
               })(
                 <Input
                   prefix={<Icon type="user" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
                   placeholder="账户"
-                />,
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('name', {
-                rules: [{ required: true, message: '请输入昵称' }],
-              })(
-                <Input
-                  prefix={<Icon type="smile" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
-                  placeholder="昵称"
                 />,
               )}
             </Form.Item>
@@ -94,7 +84,7 @@ const RegisterForm: React.FC<RegisterComponentProps> = props => {
                   已同意用户协议
               </Checkbox>
               <section>
-                <Button type="primary" loading={false} block disabled={!aggreeLicensePolicy} htmlType="submit">
+                <Button type="primary" loading={props.submitting} block disabled={!aggreeLicensePolicy} htmlType="submit">
                   注册
                 </Button>
                 <a onClick={() => router.push('/user/login')}>&larr;返回登录页</a>

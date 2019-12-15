@@ -20,8 +20,8 @@ const Model: IRegisterModelType = {
     *register({ payload }, { call }) {
       const response = yield call(register, payload);
 
-      if (response.status === 200) {
-        router.push('/meetings');
+      if (response && response.data.msg === '成功') {
+        router.push('/');
       }
     },
   },

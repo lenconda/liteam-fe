@@ -19,7 +19,7 @@ axios.interceptors.response.use((response: any) => {
   }
 
   if (response.data.msg && response.data.msg !== '成功') {
-    message.success(response.data.message);
+    message.success(response.data.msg);
   }
 
   return response;

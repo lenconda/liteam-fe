@@ -54,9 +54,16 @@ const LoginForm: React.FC<LoginComponentProps> = props => {
               )}
             </Form.Item>
             <Form.Item>
-              {
-                getFieldDecorator('code', {})
-              }
+              <Row gutter={8}>
+                <Col span={12}>
+                  {getFieldDecorator('verification-code', {
+                    rules: [{ required: true, message: '请输入验证码' }],
+                  })(<Input />)}
+                </Col>
+                <Col span={12}>
+                  <img height="40px" src="https://www.polarxiong.com/usr/uploads/2015/05/54879172.jpg" alt="code" />
+                </Col>
+              </Row>
             </Form.Item>
             <Form.Item>
               {getFieldDecorator('remember', {
@@ -64,7 +71,7 @@ const LoginForm: React.FC<LoginComponentProps> = props => {
                 initialValue: true,
               })(<Checkbox>使我保持登录状态</Checkbox>)}
               <section>
-                <Button type="primary" loading={false} block htmlType="submit">
+                <Button type="primary" loading={props.submitting} block htmlType="submit">
                   登录
                 </Button>
                 <a onClick={() => router.push('/user/register')}>没有账户？注册一个账户&rarr;</a>
