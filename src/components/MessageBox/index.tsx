@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from 'antd';
 import styles from './styles.less';
 
 export interface IMessage {
@@ -19,44 +20,59 @@ export interface MessageBoxComponentProps {
   message?: IMessage[];
   from: number;
   to: number;
+  loading?: boolean;
 }
 
 const MessageBox: React.FC<MessageBoxComponentProps> = props => (
-  <div className={styles['message-box']}>
-    {
-      props.message &&
-        props.message.map((value, index) => {
-          switch (value.type) {
-            case 'image':
-              return (
-                <div
-                  key={index.toString()}
-                  className={
-                    `${styles['message-item']} ${props.from === value.from ? styles.from : styles.to}`
-                  }
-                >
-                  <img src={value.data} alt={value.data} />
-                </div>
-              );
-            case 'text':
-              return (
-                <div
-                  key={index.toString()}
-                  className={
-                    `${styles['message-item']} ${props.from === value.from ? styles.from : styles.to}`
-                  }
-                >
-                  {value.data}
-                </div>
-              );
-            case 'request':
+  !props.loading
+  ? <div className={styles['message-box']}>
+      {
+        props.message &&
+          props.message.map((value, index) => {
+            if (
+              (value.from === props.from || value.from === props.to)
+              &&
+              (value.to === props.to || value.to === props.from)
+            ) {
+              switch (value.type) {
+                case 'image':
+                  return (
+                    <div
+                      key={index.toString()}
+                      className={
+                        `${styles['message-item']} ${props.from === value.from ? styles.from : styles.to}`
+                      }
+                    >
+                      <img src={value.data} alt={value.data} />
+                    </div>
+                  );
+                case 'text':
+                  return (
+                    <div
+                      key={index.toString()}
+                      className={
+                        `${styles['message-item']} ${props.from === value.from ? styles.from : styles.to}`
+                      }
+                    >
+                      {value.data}
+                    </div>
+                  );
+                case 'request':
+                  return null;
+                default:
+                  return null;
+              }
+            } else {
               return null;
-            default:
-              return null;
-          }
-        })
-    }
-  </div>
+            }
+          })
+      }
+      <div
+        style={{ width: '100%' }}
+        ref={el => el?.scrollIntoView({ behavior: 'auto' })}
+      />
+    </div>
+  : <Card loading></Card>
 );
 
 export default MessageBox;

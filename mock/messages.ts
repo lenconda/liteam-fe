@@ -59,7 +59,7 @@ const server = {
         to: 3,
         data: 'asdasdasdasd',
         type: 'text',
-        read: false,
+        read: true,
         time: new Date().toLocaleString(),
       },
       {

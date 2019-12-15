@@ -1,5 +1,27 @@
 @import '~antd/es/style/themes/default.less';
 
-.cursor-pointer:hover {
-  cursor: pointer;
+.item {
+  width: 100%;
+  transition: all .4s;
+  box-sizing: border-box;
+  padding: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+
+  &.selected {
+    background-color: #f0fdff;
+    transition: all .4s;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f0fdff;
+    transition: all .4s;
+  }
+}
+
+.avatar {
+  border: 1px solid #ddd;
 }

@@ -12,6 +12,7 @@ const server = {
         id: req.params.id,
         age: 3,
         gender: '女',
+        isFriend: true,
         impressions: [
           'lorem', 'ipsum',
         ],
@@ -26,7 +27,7 @@ const server = {
       msg: '成功',
       data: {
         username: 'iscyf',
-        id: req.params.id,
+        id: 3,
         age: 3,
         gender: '女',
         avatar: 'http://q2ayul341.bkt.clouddn.com/avatar3.png',

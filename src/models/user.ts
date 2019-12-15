@@ -9,6 +9,7 @@ export interface IUserModelState {
   gender?: string;
   age?: number;
   avatar?: string;
+  isFriend?: boolean;
 }
 
 export interface IUserModelType {
@@ -31,6 +32,7 @@ const UserModel: IUserModelType = {
     gender: '',
     age: 0,
     avatar: '',
+    isFriend: false,
   },
 
   effects: {
@@ -45,7 +47,7 @@ const UserModel: IUserModelType = {
 
   reducers: {
     setUserProfile(state, { payload }) {
-      const { id, username, gender, age, avatar } = payload;
+      const { id, username, gender, age, avatar, isFriend } = payload;
       return {
         ...state,
         id,
@@ -53,6 +55,7 @@ const UserModel: IUserModelType = {
         gender,
         age,
         avatar,
+        isFriend,
       };
     },
   },
