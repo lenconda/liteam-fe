@@ -16,7 +16,7 @@
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:prettier": "check-prettier lint",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "lint:style": "stylelint \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
     "start": "umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
