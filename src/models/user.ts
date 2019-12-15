@@ -4,10 +4,11 @@ import { Reducer } from 'redux';
 import { profile } from '@/services/user';
 
 export interface IUserModelState {
-  name?: string;
-  account?: string;
-  role?: number;
   id?: number;
+  username?: string;
+  gender?: string;
+  age?: number;
+  avatar?: string;
 }
 
 export interface IUserModelType {
@@ -25,10 +26,11 @@ const UserModel: IUserModelType = {
   namespace: 'user',
 
   state: {
-    name: '',
-    account: '',
-    role: -1,
     id: -1,
+    username: '',
+    gender: '',
+    age: 0,
+    avatar: '',
   },
 
   effects: {
@@ -43,13 +45,14 @@ const UserModel: IUserModelType = {
 
   reducers: {
     setUserProfile(state, { payload }) {
-      const { name, account, role, id } = payload;
+      const { id, username, gender, age, avatar } = payload;
       return {
         ...state,
-        name,
-        account,
-        role,
         id,
+        username,
+        gender,
+        age,
+        avatar,
       };
     },
   },

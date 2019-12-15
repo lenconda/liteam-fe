@@ -9,12 +9,27 @@ const server = {
       msg: '成功',
       data: {
         username: 'iscyf',
-        userId: req.params.id,
+        id: req.params.id,
         age: 3,
         gender: '女',
         impressions: [
           'lorem', 'ipsum',
         ],
+        avatar: 'http://q2ayul341.bkt.clouddn.com/avatar3.png',
+      },
+    });
+  },
+
+  'GET /api/user': (req: Request, res: Response) => {
+    res.send({
+      code: '200',
+      msg: '成功',
+      data: {
+        username: 'iscyf',
+        id: req.params.id,
+        age: 3,
+        gender: '女',
+        avatar: 'http://q2ayul341.bkt.clouddn.com/avatar3.png',
       },
     });
   },

@@ -1,4 +1,4 @@
-import { Icon, Menu, Spin } from 'antd';
+import { Icon, Menu, Spin, Avatar } from 'antd';
 import { ClickParam } from 'antd/es/menu';
 import React from 'react';
 import { connect } from 'dva';
@@ -11,13 +11,13 @@ import styles from './index.less';
 export interface GlobalHeaderRightComponentProps extends ConnectProps {
   currentUser?: IUserModelState;
   menu?: boolean;
-  account?: string;
-  name?: string;
+  // account?: string;
+  // name?: string;
 }
 
 const AvatarDropdown: React.FC<GlobalHeaderRightComponentProps> = ({
   dispatch,
-  name = '',
+  currentUser,
   menu,
 }) => {
   const onMenuClick = (event: ClickParam) => {
@@ -59,14 +59,13 @@ const AvatarDropdown: React.FC<GlobalHeaderRightComponentProps> = ({
     </Menu>
   );
 
-  return name ? (
+  return currentUser?.username ? (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
         {
-        /*
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" /> */
+          <Avatar size="small" className={styles.avatar} src={currentUser?.avatar} alt="avatar" />
         }
-        <span className={styles.name}>{name}</span>
+        <span className={styles.name}>{currentUser?.username}</span>
       </span>
     </HeaderDropdown>
   ) : (
@@ -81,6 +80,5 @@ const AvatarDropdown: React.FC<GlobalHeaderRightComponentProps> = ({
 };
 
 export default connect(({ user }: ConnectState) => ({
-  name: user.name,
-  account: user.account,
+  currentUser: user,
 }))(AvatarDropdown);

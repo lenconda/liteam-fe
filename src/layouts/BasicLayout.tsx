@@ -57,6 +57,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       dispatch({
         type: 'user/fetchUserProfile',
       });
+      dispatch({
+        type: 'global/getAllMessages',
+      });
     }
   }, []);
   /**

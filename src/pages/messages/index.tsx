@@ -3,11 +3,15 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Dispatch, AnyAction } from 'redux';
 import { Card, Row, Col, Input } from 'antd';
 import MessageBox from '@/components/MessageBox';
+import { connect } from 'dva';
+import { ConnectState, IGlobalModelState, IUserModelState } from '@/models/connect';
 
 const { TextArea } = Input;
 
 interface MessagePageProps extends FormComponentProps {
   dispatch: Dispatch<AnyAction>;
+  global: IGlobalModelState;
+  user: IUserModelState;
 }
 
 const Message: React.FC<MessagePageProps> = props => {
@@ -20,7 +24,11 @@ const Message: React.FC<MessagePageProps> = props => {
       </Col>
       <Col xs={24} sm={14} md={16} xl={18}>
         <Card title="彭瀚林">
-          <MessageBox></MessageBox>
+          <MessageBox
+            message={props.global.messages}
+            to={props.user.id || 0}
+            from={1}
+          />
           <TextArea></TextArea>
         </Card>
       </Col>
@@ -28,4 +36,8 @@ const Message: React.FC<MessagePageProps> = props => {
   );
 };
 
-export default Message;
+export default connect(({ global, user }: ConnectState) => ({
+  global,
+  user,
+}))(Message);
+// export default Message;

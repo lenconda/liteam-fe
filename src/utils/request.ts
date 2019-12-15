@@ -9,17 +9,6 @@ const toLogin = (msg: string) => {
 
 axios.defaults.timeout = 3600000;
 
-axios.interceptors.request.use(config => {
-  const newConfig = config;
-  if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
-    newConfig.headers = {
-      Authorization:
-          `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`,
-    };
-  }
-  return newConfig;
-});
-
 axios.interceptors.response.use((response: any) => {
   if (response.data.data && response.data.data.token) {
     if (window.localStorage.getItem('persist') === '1') {
@@ -29,7 +18,7 @@ axios.interceptors.response.use((response: any) => {
     }
   }
 
-  if (response.data.message && response.data.message !== 'OK') {
+  if (response.data.msg && response.data.msg !== '成功') {
     message.success(response.data.message);
   }
 

@@ -1,27 +1,25 @@
 import { Reducer } from 'redux';
-import { Subscription } from 'dva';
+import { Subscription, Effect } from 'dva';
+import { IMessage } from '@/components/MessageBox';
 
-import { NoticeIconData } from '@/components/NoticeIcon';
-
-export interface INoticeItem extends NoticeIconData {
-  id: string;
-  type: string;
-  status: string;
-}
+import {
+  getAllMessages,
+} from '@/services/messages';
 
 export interface IGlobalModelState {
   collapsed?: boolean;
-  name?: string;
-  account?: string;
+  messages?: IMessage[];
 }
 
 export interface IGlobalModelType {
   namespace: 'global';
   state: IGlobalModelState;
   effects: {
+    getAllMessages: Effect;
   };
   reducers: {
     changeLayoutCollapsed: Reducer<IGlobalModelState>;
+    setAllMessages: Reducer<IGlobalModelState>;
   };
   subscriptions: { setup: Subscription };
 }
@@ -31,10 +29,17 @@ const GlobalModel: IGlobalModelType = {
 
   state: {
     collapsed: false,
-    name: '',
+    messages: [],
   },
 
   effects: {
+    *getAllMessages({ payload }, { call, put }) {
+      const response = yield call(getAllMessages);
+      yield put({
+        type: 'setAllMessages',
+        payload: response.data.data,
+      });
+    },
   },
 
   reducers: {
@@ -42,6 +47,13 @@ const GlobalModel: IGlobalModelType = {
       return {
         ...state,
         collapsed: payload,
+      };
+    },
+
+    setAllMessages(state, { payload }) {
+      return {
+        ...state,
+        messages: payload,
       };
     },
   },
