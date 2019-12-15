@@ -4,7 +4,7 @@ import { IMessage } from '@/components/MessageBox';
 import _ from 'lodash';
 
 import {
-  getAllMessages,
+  getAllMessages, flushMessages,
 } from '@/services/messages';
 import { ConnectState, IUserModelState } from './connect.d';
 import { findUserById } from '@/services/user';
@@ -36,6 +36,7 @@ export interface IGlobalModelType {
     getCurrentSender: Effect;
     acceptRequest: Effect;
     rejectRequest: Effect;
+    flushMessages: Effect;
   };
   reducers: {
     changeLayoutCollapsed: Reducer<IGlobalModelState>;
@@ -44,6 +45,7 @@ export interface IGlobalModelType {
     updateMessageSenders: Reducer<IGlobalModelState>;
     changeCurrentSender: Reducer<IGlobalModelState>;
     setRejectRequest: Reducer<IGlobalModelState>;
+    setFlushMessages: Reducer<IGlobalModelState>;
   };
   subscriptions: { setup: Subscription };
 }
@@ -142,6 +144,15 @@ const GlobalModel: IGlobalModelType = {
         type: 'setRejectRequest',
       });
     },
+
+    *flushMessages({ payload }, { call, put }) {
+      const { from, to } = payload;
+      yield call(flushMessages, from, to);
+      yield put({
+        type: 'setFlushMessages',
+        payload,
+      });
+    },
   },
 
   reducers: {
@@ -187,6 +198,22 @@ const GlobalModel: IGlobalModelType = {
           ...state?.currentSender,
           rejected: true,
         },
+      };
+    },
+
+    setFlushMessages(state, { payload }) {
+      const { from } = payload;
+      return {
+        ...state,
+        messageSenders: state?.messageSenders?.map(value => {
+          if (value.from === from) {
+            return {
+              ...value,
+              count: 0,
+            };
+          }
+          return value;
+        }),
       };
     },
   },

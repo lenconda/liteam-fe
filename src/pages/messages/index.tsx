@@ -53,6 +53,13 @@ const Message: React.FC<MessagePageProps> = props => {
                         type: 'global/getCurrentSender',
                         payload: value.from.id,
                       });
+                      dispatch({
+                        type: 'global/flushMessages',
+                        payload: {
+                          from: value.from,
+                          to: props.user.id,
+                        },
+                      });
                     }
                   }}
                 />
