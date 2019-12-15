@@ -1,4 +1,4 @@
-import { delay } from 'roadhog-api-doc';
+// import { delay } from 'roadhog-api-doc';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const server = {
@@ -6,14 +6,14 @@ const server = {
     code: '200',
     msg: '成功',
     data: [
-      {
-        from: 3,
-        to: 1,
-        data: 'asdasdasdasd',
-        type: 'text',
-        read: false,
-        time: new Date().toLocaleString(),
-      },
+      // {
+      //   from: 1,
+      //   to: 3,
+      //   data: '',
+      //   type: 'request',
+      //   read: false,
+      //   time: new Date().toLocaleString(),
+      // },
       {
         from: 3,
         to: 1,
@@ -106,4 +106,5 @@ const server = {
   },
 };
 
-export default delay(server, 3000);
+export default server;
+// export default delay(server, 3000);

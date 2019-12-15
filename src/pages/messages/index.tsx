@@ -23,6 +23,11 @@ const Message: React.FC<MessagePageProps> = props => {
 
   const { dispatch } = props;
 
+  const messagesMapping = {
+    image: '[图片]',
+    request: '[请求加为好友]',
+  };
+
   return (
     <Row gutter={24}>
       <Col xs={24} sm={10} md={8} xl={6}>
@@ -37,15 +42,18 @@ const Message: React.FC<MessagePageProps> = props => {
                   avatar={value.from.avatar || ''}
                   selected={props.global.currentSender?.id === value.from.id}
                   currentMessage={
-                    value.currentMessage.type === 'image'
-                    ? '[图片]'
-                    : value.currentMessage.data
+                    value.currentMessage.type === 'text'
+                    ? value.currentMessage.data
+                    : messagesMapping[value.currentMessage.type]
                   }
+                  time={value.currentMessage.time}
                   onClick={() => {
-                    dispatch({
-                      type: 'global/getCurrentSender',
-                      payload: value.from.id,
-                    });
+                    if (value.from.id !== props.global.currentSender?.id) {
+                      dispatch({
+                        type: 'global/getCurrentSender',
+                        payload: value.from.id,
+                      });
+                    }
                   }}
                 />
               ))
@@ -61,6 +69,18 @@ const Message: React.FC<MessagePageProps> = props => {
                 to={props.user.id || 0}
                 from={1}
                 loading={props.fetchMessagesLoading}
+                isFriend={props.global.currentSender.isFriend}
+                rejected={props.global.currentSender.rejected}
+                onAccept={() => {
+                  dispatch({
+                    type: 'global/acceptRequest',
+                  });
+                }}
+                onReject={() => {
+                  dispatch({
+                    type: 'global/rejectRequest',
+                  });
+                }}
               />
               {
                 props.global.currentSender.isFriend &&
@@ -72,6 +92,7 @@ const Message: React.FC<MessagePageProps> = props => {
                       <Button
                         type="primary"
                         size="small"
+                        icon="check"
                         disabled={currentMessage.length === 0}
                         onClick={() => {
                           dispatch({

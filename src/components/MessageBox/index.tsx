@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 import styles from './styles.less';
 
 export interface IMessage {
@@ -21,6 +21,10 @@ export interface MessageBoxComponentProps {
   from: number;
   to: number;
   loading?: boolean;
+  isFriend?: boolean;
+  rejected?: boolean;
+  onAccept?: () => any;
+  onReject?: () => any;
 }
 
 const MessageBox: React.FC<MessageBoxComponentProps> = props => (
@@ -58,7 +62,35 @@ const MessageBox: React.FC<MessageBoxComponentProps> = props => (
                     </div>
                   );
                 case 'request':
-                  return null;
+                  return (
+                    <div
+                      key={index.toString()}
+                      className={
+                        `${styles['message-item']} ${props.from === value.from ? styles.from : styles.to}`
+                      }
+                    >
+                      {
+                        props.rejected
+                        ? '已拒绝好友请求'
+                        : <>
+                            <div>
+                              {
+                                props.isFriend
+                                ? '我们已经是好友啦，一起来聊天吧～'
+                                : '请求加为好友'
+                              }
+                            </div>
+                            {
+                              !props.isFriend &&
+                                <div className={styles.buttons}>
+                                  <Button type="primary" size="small" onClick={props.onAccept}>同意</Button>
+                                  <Button type="danger" size="small" onClick={props.onReject}>拒绝</Button>
+                                </div>
+                            }
+                          </>
+                      }
+                    </div>
+                  );
                 default:
                   return null;
               }

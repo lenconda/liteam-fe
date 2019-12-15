@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Avatar, Badge } from 'antd';
-import Ellipsis from 'ant-design-pro/lib/Ellipsis';
+import moment from 'moment';
 import styles from './styles.less';
 
 export interface MessageListItemComponentProps {
@@ -10,6 +10,7 @@ export interface MessageListItemComponentProps {
   unread: number;
   onClick?: () => any;
   selected?: boolean;
+  time: string;
 }
 
 const MessageListItem: React.FC<MessageListItemComponentProps> = props => (
@@ -24,7 +25,7 @@ const MessageListItem: React.FC<MessageListItemComponentProps> = props => (
         </Badge>
       }
       title={props.name}
-      description={<Ellipsis length={25}>{props.currentMessage}</Ellipsis>}
+      description={`${moment(props.time).fromNow()}·${props.currentMessage}`}
     />
   </List.Item>
 );

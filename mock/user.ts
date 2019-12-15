@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { delay } from 'roadhog-api-doc';
+// import { delay } from 'roadhog-api-doc';
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const server = {
@@ -8,15 +8,15 @@ const server = {
       code: '200',
       msg: '成功',
       data: {
-        username: 'iscyf',
-        id: req.params.id,
+        username: '彭瀚林',
+        id: parseInt(req.params.id, 10),
         age: 3,
-        gender: '女',
+        gender: '男',
         isFriend: true,
         impressions: [
           'lorem', 'ipsum',
         ],
-        avatar: 'http://q2ayul341.bkt.clouddn.com/avatar3.png',
+        avatar: 'https://avatars0.githubusercontent.com/u/9963587?s=460&v=4',
       },
     });
   },
@@ -26,7 +26,7 @@ const server = {
       code: '200',
       msg: '成功',
       data: {
-        username: 'iscyf',
+        username: '陈雨菲',
         id: 3,
         age: 3,
         gender: '女',
@@ -94,4 +94,5 @@ const server = {
   },
 };
 
-export default delay(server, 3000);
+export default server;
+// export default delay(server, 3000);

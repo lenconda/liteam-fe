@@ -9,11 +9,15 @@ import {
 import { ConnectState, IUserModelState } from './connect.d';
 import { findUserById } from '@/services/user';
 
+export interface ICurrentSender extends IUserModelState {
+  rejected?: boolean;
+}
+
 export interface IGlobalModelState {
   collapsed?: boolean;
   messages?: IMessage[];
   messageSenders?: IGroupItem[];
-  currentSender?: IUserModelState;
+  currentSender?: ICurrentSender;
 }
 
 export interface IGroupItem {
@@ -30,6 +34,8 @@ export interface IGlobalModelType {
     getOneMessage: Effect;
     groupMessages: Effect;
     getCurrentSender: Effect;
+    acceptRequest: Effect;
+    rejectRequest: Effect;
   };
   reducers: {
     changeLayoutCollapsed: Reducer<IGlobalModelState>;
@@ -37,6 +43,7 @@ export interface IGlobalModelType {
     setOneMessage: Reducer<IGlobalModelState>;
     updateMessageSenders: Reducer<IGlobalModelState>;
     changeCurrentSender: Reducer<IGlobalModelState>;
+    setRejectRequest: Reducer<IGlobalModelState>;
   };
   subscriptions: { setup: Subscription };
 }
@@ -116,6 +123,25 @@ const GlobalModel: IGlobalModelType = {
         payload: user.data.data,
       });
     },
+
+    *acceptRequest({ payload }, { put, select }) {
+      const id = yield select(({ global }: ConnectState) => global.currentSender?.id);
+      // if (payload === id) {
+        // yield put({
+        //   type: 'setAcceptRequest',
+        // });
+      // }
+      yield put({
+        type: 'getCurrentSender',
+        payload: id,
+      });
+    },
+
+    *rejectRequest({ payload }, { put }) {
+      yield put({
+        type: 'setRejectRequest',
+      });
+    },
   },
 
   reducers: {
@@ -151,6 +177,16 @@ const GlobalModel: IGlobalModelType = {
       return {
         ...state,
         currentSender: payload,
+      };
+    },
+
+    setRejectRequest(state, { payload }) {
+      return {
+        ...state,
+        currentSender: {
+          ...state?.currentSender,
+          rejected: true,
+        },
       };
     },
   },
